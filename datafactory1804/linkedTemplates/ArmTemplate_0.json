@@ -211,9 +211,9 @@
 					],
 					"sinks": [
 						{
-							"dataset": {
-								"referenceName": "csvds",
-								"type": "DatasetReference"
+							"linkedService": {
+								"referenceName": "datalakelinkedservice",
+								"type": "LinkedServiceReference"
 							},
 							"name": "sink1"
 						}
@@ -274,13 +274,12 @@
 						"middlenamenotnull sort(asc(FirstName, true)) ~> fnameasc",
 						"fnameasc sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          Column_1 as string,",
-						"          Column_2 as string,",
-						"          Column_3 as string,",
-						"          Column_4 as string,",
-						"          Column_5 as string",
-						"     ),",
+						"     format: 'delimited',",
+						"     fileSystem: 'staging',",
+						"     columnDelimiter: ',',",
+						"     escapeChar: '\\\\',",
+						"     quoteChar: '\\\"',",
+						"     columnNamesAsHeader: false,",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -291,7 +290,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/sqlds')]",
-				"[concat(variables('factoryId'), '/datasets/csvds')]"
+				"[concat(variables('factoryId'), '/linkedServices/datalakelinkedservice')]"
 			]
 		},
 		{
